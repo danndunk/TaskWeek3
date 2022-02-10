@@ -1,0 +1,263 @@
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+
+nav {
+  height: 7vh;
+  background-color: #f4f3f3;
+}
+
+nav #contactme a {
+  color: white;
+  background-color: #111727;
+  border-radius: 5px;
+  padding: 3px 15px;
+}
+
+/* Home */
+
+#content {
+  height: 93vh;
+}
+
+#profile {
+  background-color: #ced2d6;
+}
+
+#profile .container {
+  height: 93vh;
+}
+
+#profile .container .card {
+  height: 80vh;
+  box-shadow: 0px 0px 20px #a7a6a6;
+}
+
+#profile .left-profile .contactncv {
+  margin-top: 50px !important;
+}
+
+#profile .left-profile .socialmedia {
+  margin-top: 50px !important;
+}
+
+#profile .left-profile .contactncv > a {
+  text-decoration: none;
+  color: white;
+  background-color: #111727;
+  padding: 2px 18px;
+  border-radius: 35px;
+}
+
+#profile .left-profile .contactncv img {
+  width: 15px;
+}
+
+#profile .left-profile .socialmedia img {
+  margin-right: 30px;
+}
+
+#profile .left-profile > p {
+  text-align: justify;
+  margin-top: 30px;
+}
+
+#profile .socialmedia img {
+  width: 35px;
+  margin-right: 25px;
+}
+
+#profile .detailprofile {
+  box-shadow: 0px 0px 10px black;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0px 0px 20px #a7a6a6;
+  background-color: #f8f5f5;
+}
+
+#profile .right-profile img {
+  width: 100%;
+  height: 400px;
+  border-radius: 5px;
+}
+
+#profile .right-profile h3 {
+  margin-top: 10px;
+}
+
+#profile .right-profile p {
+  margin-top: -5px;
+  padding-bottom: 20px;
+}
+
+#myproject h1 {
+  text-align: center;
+  padding-top: 50px;
+}
+
+#myproject .project-group {
+  margin-top: 50px;
+}
+
+#myproject .project-group .card {
+  margin: 15px;
+  width: 31%;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0px 0px 25px rgba(196, 188, 188, 0.747);
+}
+
+#myproject .project-group .card > div > img {
+  width: 100%;
+  height: 32vh;
+  border-radius: 6px;
+}
+
+#myproject .card > div {
+  padding: 12px;
+}
+
+#myproject .card a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+#myproject .card h5 {
+  margin-top: 8px;
+}
+
+#myproject .card #duration {
+  margin-top: -8px;
+  color: #989494;
+}
+
+#myproject .logo-group {
+  margin-top: 23px;
+}
+
+#myproject .logo-group img {
+  width: 8%;
+  margin-right: 19px;
+}
+
+#myproject .editndelete a {
+  margin-top: 23px;
+  width: 48%;
+  border-radius: 10px;
+  background-color: #111727;
+  color: white;
+  text-align: center;
+}
+
+/* form project */
+.container-form {
+  width: 40%;
+}
+
+.container-form form {
+  width: 100%;
+}
+
+.container-form form h1 {
+  text-align: center;
+}
+
+.container-form form textarea {
+  resize: none;
+}
+
+.button-submit {
+  text-align: end;
+}
+
+/* form project */
+
+/* #form-project input,
+#form-project textarea {
+  box-shadow: 0px 0px 4px rgb(150, 147, 147);
+} */
+
+#form-project #technologies div label {
+  color: #514a4a;
+  font-weight: 400px;
+}
+
+#form-project #technologies div input {
+  margin-right: 14px;
+  width: 17px;
+  height: 17px;
+  margin-top: 15px;
+}
+
+#form-project #technologies .left-technologies {
+  margin-right: 30px;
+}
+
+#form-project label,
+#form-contact label {
+  font-weight: bold;
+}
+
+#form-project .input-file .container-input-project-image {
+  background-color: white;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+#form-project .input-file .container-input-project-image label {
+  cursor: pointer;
+}
+
+#form-project .input-file .container-input-project-image span {
+  background-color: #e4e4e4;
+  color: #b2abab;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+#form-project .input-file .container-input-project-image img {
+  transform: rotate(30deg);
+}
+
+#form-project .button-submit button,
+#form-contact .button-submit {
+  padding: 4px 23px;
+  background: #111727;
+  border-radius: 115px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Detail project */
+#project-detail {
+  background-color: #e3e7eb;
+}
+
+#project-detail h1 {
+  text-align: center;
+}
+
+#project-detail .container-detail-project {
+  margin-top: 50px;
+}
+
+#project-detail .container-info-project img {
+  width: 27px;
+}
+
+#project-detail label {
+  margin-left: 15px;
+}
+
+#project-detail .container > p {
+  margin-top: 35px;
+  text-align: justify;
+}
+
+/* nav div ul li a:checked {
+  font-weight: bold;
+} */
