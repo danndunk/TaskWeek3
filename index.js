@@ -1,13 +1,16 @@
 // import package express
 const express = require("express");
 
+// import package pg
+const db = require("./connection/db");
+
 // menggunakan package express
 const app = express();
 
 // set template engine
 app.set("view engine", "hbs");
 
-// sett app can use spesific folder (public)
+// set app can use spesific folder (public)
 app.use("/public", express.static(__dirname + "/public"));
 
 // render data from form to home
@@ -49,13 +52,33 @@ app.get("/", function (req, res) {
 
 // home
 app.get("/home", function (req, res) {
-  let dataProjects = projects.map(function (item) {
-    return {
-      ...item,
-      isLogin: isLogin,
-    };
+  let query = "SELECT * FROM tb_projects";
+
+  db.connect((err, client, done) => {
+    if (err) throw err;
+
+    client.query(query, (err, result) => {
+      done();
+
+      if (err) throw err;
+
+      let data = result.rows;
+      console.log(data);
+
+      data = data.map((item) => {
+        return {
+          ...item,
+          duration: getDurationTime(
+            new Date(item.end_date) - new Date(item.start_date)
+          ),
+          year: getYear(new Date(item.start_date)),
+          isLogin: isLogin,
+        };
+      });
+      console.log(data);
+      res.render("index", { isLogin: isLogin, projects: data });
+    });
   });
-  res.render("index", { isLogin: isLogin, projects: dataProjects });
 });
 
 app.post("/home", function (req, res) {
