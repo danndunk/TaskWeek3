@@ -28,6 +28,7 @@ nav #contactme a {
 
 #profile .container {
   height: 93vh;
+  margin-top: 50px;
 }
 
 #profile .container .card {
@@ -155,6 +156,7 @@ nav #contactme a {
 /* form project */
 .container-form {
   width: 40%;
+  margin-top: 50px;
 }
 
 .container-form form {

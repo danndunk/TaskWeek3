@@ -10,7 +10,7 @@ app.set("view engine", "hbs");
 // sett app can use spesific folder (public)
 app.use("/public", express.static(__dirname + "/public"));
 
-// render data from form to blog
+// render data from form to home
 app.use(express.urlencoded({ extended: false }));
 
 // set login
@@ -19,10 +19,27 @@ let isLogin = true;
 const projects = [
   {
     title: "DUMBWAYS MOBILE APP",
-    year: "2021",
-    duration: "Durasi: 3 bulan",
-    message: `Some quick example text to build on the card title and make up the bulk of the card's content.`,
+    startDate: "2022-02-01",
+    endDate: "2022-03-01",
+    year: "2022",
+    duration: "3 Months",
+    description: `Some quick example text to build on the card title and make up the bulk of the card's contents.`,
   },
+];
+
+let month = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 // set endpoint / root
@@ -44,28 +61,75 @@ app.get("/home", function (req, res) {
 app.post("/home", function (req, res) {
   let title = req.body.projectname;
 
-  let starDate = req.body.startdate;
+  let startDate = req.body.startdate;
   let endDate = req.body.enddate;
 
-  let duration = new Date(endDate) - new Date(starDate);
-  let startYearS = new Date(starDate);
+  let duration = new Date(endDate) - new Date(startDate);
+  let startYearS = new Date(startDate);
 
-  let message = req.body.message;
-
+  let description = req.body.description;
   // let iconGroup = req.body.tech;
 
   //   let file = req.body.file;
 
   let project = {
     title,
+    startDate,
+    endDate,
     year: getYear(startYearS),
     duration: getDurationTime(duration),
-    message,
+    description,
   };
 
   projects.push(project);
 
-  console.log(projects);
+  res.redirect("/home");
+});
+
+// set update project
+app.get("/update-project/:index", function (req, res) {
+  let index = req.params.index;
+  index = projects[index];
+  res.render("update-project", index);
+});
+
+// update project
+app.post("/home", function (req, res) {
+  let index = req.params.index;
+
+  projects[index].title = req.body.projectname;
+  projects[index].startDate = req.body.startdate;
+  projects[index].endDate = req.body.enddate;
+
+  projects[index].duration = new Date(endDate) - new Date(startDate);
+  projects[index].year = new Date(startDate);
+
+  projects[index].description = req.body.description;
+
+  // let index = req.params.index;
+
+  // let title = req.body.projectname;
+
+  // let startDate = req.body.startdate;
+  // let endDate = req.body.enddate;
+
+  // let duration = new Date(endDate) - new Date(startDate);
+  // let startYearS = new Date(startDate);
+
+  // let description = req.body.description;
+
+  // let project = {
+  //   title,
+  //   startDate,
+  //   endDate,
+  //   year: getYear(startYearS),
+  //   duration: getDurationTime(duration),
+  //   description,
+  // };
+
+  // delete projects[index];
+  // projects[index] = project;
+  console.log("asidhasud");
   res.redirect("/home");
 });
 
@@ -77,15 +141,19 @@ app.get("/delete-project/:index", function (req, res) {
   res.redirect("/home");
 });
 
-// detail projek
+// add project
 app.get("/my-project", function (req, res) {
   res.render("my-project");
 });
 
-app.get("/home/:id", function (req, res) {
-  let id = req.params.id;
+// detail projek
+app.get("/home/:index", function (req, res) {
+  let index = req.params.index;
+  index = projects[index];
+  index.startDate = getFullTime(new Date(index.startDate));
+  index.endDate = getFullTime(new Date(index.endDate));
 
-  res.render("my-project-detail", { id: id });
+  res.render("my-project-detail", index);
 });
 
 // contact
@@ -120,4 +188,19 @@ function getDurationTime(duration) {
 function getYear(first) {
   let year = new Date(first).getFullYear();
   return `${year}`;
+}
+
+function getFullTime(time) {
+  let date = time.getDate();
+  let monthIndex = time.getMonth();
+  let year = time.getFullYear();
+
+  let hours = time.getHours();
+  let minutes = time.getMinutes();
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  return `${date} ${month[monthIndex]} ${year}`;
 }

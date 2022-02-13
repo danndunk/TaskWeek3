@@ -20,7 +20,7 @@
   </head>
   <body>
     <nav
-      class="navbar navbar-expand-lg navbar-light"
+      class="navbar navbar-expand-lg navbar-light fixed-top"
       style="background-color: #e3f2fd"
     >
       <div class="container">
@@ -134,12 +134,12 @@
                   class="card-img-top"
                   alt="..."
                 />
-                <a href="/home/1">
+                <a href="/home/{{@index}}">
                   <h5 class="card-title">{{this.title}} - {{this.year}}</h5>
                 </a>   
                 <P id="duration">Duration: {{this.duration}}</P>
                 <p class="card-text">
-                  {{this.message}}
+                  {{this.description}}
                 </p>
                 <div class="logo-group">
                   <img src="../public/logo/playstore.png" alt="" />
@@ -148,7 +148,7 @@
                 </div>
                 {{#if isLogin}}
                 <div class="editndelete d-flex justify-content-between">
-                  <a href="#">edit</a>
+                  <a href="/update-project/{{@index}}">edit</a>
                   <a href="/delete-project/{{@index}}">delete</a>
                 </div>
                 {{/if}}

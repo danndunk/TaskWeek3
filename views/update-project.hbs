@@ -59,19 +59,20 @@
     <div class="container-fluid d-flex justify-content-center pt-5" id="form-project" style="background-color: #E3E7EB;">
         <div class="container-form">
             <form action="/home" method="POST">
-                <h1>ADD MY PROJECT</h1>
+                <h1>Update My Project</h1>
                 <div class="mb-4 mt-5">
                     <label for="project-name" class="form-label">Project Name</label>
-                    <input type="text" class="form-control" id="project-name" aria-describedby="emailHelp" name="projectname">  
+                    <input type="text" class="form-control" id="project-name" aria-describedby="emailHelp" name="projectname" value="{{this.title}}">  
+                    
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="mb-4" style="width: 49%;">
                         <label for="input-startdate" class="form-label">Start Date</label>
-                        <input type="date" class="form-control" id="input-startdate" aria-describedby="emailHelp" name="startdate">
+                        <input type="date" class="form-control" id="input-startdate" aria-describedby="emailHelp" name="startdate" value="{{this.startDate}}">
                     </div>
                     <div class="mb-4" style="width: 49%;">
                         <label for="input-enddate" class="form-label">End Date</label>
-                        <input type="date" class="form-control" id="input-enddate" aria-describedby="emailHelp" name="enddate">           
+                        <input type="date" class="form-control" id="input-enddate" aria-describedby="emailHelp" name="enddate" value="{{this.endDate}}">           
                     </div>
                 </div>
                 <div class="mb-4">
@@ -82,7 +83,7 @@
                         id="input-description"
                         cols="30"
                         rows="10"
-                    ></textarea>
+                    >{{this.description}}</textarea>
                 </div>
                 
                 <div class="mb-4" id="technologies">
@@ -90,24 +91,24 @@
                     <div class="container-technologies d-flex">
                         <div class="left-technologies">
                             <div>
-                                <input type="checkbox"  id="nodeJS" aria-describedby="emailHelp" name="tech" value="aa"> 
-                                <label for="nodejs" class="form-label">Node JS</label>
+                                <input type="checkbox"  id="input-nodejs" aria-describedby="emailHelp" name="tech" value="node.png"> 
+                                <label for="input-nodejs" class="form-label">Node JS</label>
                             </div>
                             
                             <div>
-                                <input type="checkbox"  id="reactJS" aria-describedby="emailHelp" name="tech" value="bb"> 
-                                <label for="reactJS" class="form-label">React JS</label>
+                                <input type="checkbox"  id="input-react" aria-describedby="emailHelp" name="tech" value="react.png"> 
+                                <label for="input-react" class="form-label">React JS</label>
                             </div>
                         </div>
                         <div class="left-technologies">
                             <div>
-                                <input type="checkbox"  id="nextJS" aria-describedby="emailHelp" name="tech" value="cc"> 
-                                <label for="nextJS" class="form-label">Next JS</label>
+                                <input type="checkbox"  id="input-nextjs" aria-describedby="emailHelp" name="tech" value="next.png"> 
+                                <label for="input-nextjs" class="form-label">Next JS</label>
                             </div>
                             
                             <div>
-                                <input type="checkbox"  id="typeScript" aria-describedby="emailHelp" name="tech" value="dd"> 
-                                <label for="typeScript" class="form-label">TypeScript</label>
+                                <input type="checkbox"  id="input-typescript" aria-describedby="emailHelp" name="tech" value="typescript.png"> 
+                                <label for="input-typescript" class="form-label">TypeScript</label>
                             </div>
                         </div>           
                     </div>

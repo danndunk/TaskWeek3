@@ -24,7 +24,7 @@
       style="background-color: #e3f2fd"
     >
       <div class="container">
-        <a class="navbar-brand" href="index">
+        <a class="navbar-brand" href="/home">
           <img src="../public/logo/logo.png" alt="" width="36" height="24" />
         </a>
         <button
@@ -41,14 +41,14 @@
         <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="index">Home</a>
+              <a class="nav-link" aria-current="page" href="/home">Home</a>
             </li>
             <li class="nav-item ms-2">
-              <a class="nav-link" href="my-project">Add Project</a>
+              <a class="nav-link" href="/my-project">Add Project</a>
             </li>
           </ul>
           <div class="d-flex" id="contactme">
-            <a class="nav-link" href="contact">Contact Me</a>
+            <a class="nav-link" href="/contact">Contact Me</a>
           </form>
         </div>
         </div>
@@ -58,48 +58,48 @@
 
     <div class="container-fluid d-flex justify-content-center pt-5" id="project-detail">
         <div class="container">
-            <h1>DUMBWAYS WEB APP | {{id}}</h1>
+            <h1>{{this.title}}</h1>
             <div class="d-flex container-detail-project">
-                <div class="me-4" style="width: 78%;">
+                <div class="me-4" style="width: 77%;">
                     <img src="../public//image/1597827883.jpg" alt="" style="width: 100%;">
                 </div>
-                <div class="ms-4 mt-2 container-info-project" style="width: 22%;">
+                <div class="ms-4 mt-2 container-info-project" style="width: 23%;">
                     <h3>Duration</h3>
                     <div class="d-flex align-items-end mb-4 mt-3">
                         <img src="../public/logo/calendar.png" alt="">
-                        <label>asdasd</label>
+                        <label>{{this.startDate}} - {{this.endDate}}</label>
                     </div>
                     <div class="d-flex align-items-end mb-5">
                         <img src="../public/logo/calendar.png" alt="">
-                        <label>asdasd</label>
+                        <label>{{this.duration}}</label>
                     </div>
 
                     <h3>Technologies</h3>
                     <div class="d-flex">
                         <div class="me-5">
                             <div class="d-flex align-items-end mb-4 mt-3">
-                                <img src="../public/logo/calendar.png" alt="">
-                                <label>asdasd</label>
+                                <img src="../public/logo/react.png" alt="">
+                                <label>NodeJS</label>
                             </div>
                             <div class="d-flex align-items-end">
-                                <img src="../public/logo/calendar.png" alt="">
-                                <label>asdasd</label>
+                                <img src="../public/logo/next.png" alt="">
+                                <label>ReactJS</label>
                             </div>
                         </div>
                         <div>
                             <div class="d-flex align-items-end mb-4 mt-3">
-                                <img src="../public/logo/calendar.png" alt="">
-                                <label>asdasd</label>
+                                <img src="../public/logo/next.png" alt="">
+                                <label>NextJS</label>
                             </div>
                             <div class="d-flex align-items-end">
-                                <img src="../public/logo/calendar.png" alt="">
-                                <label>asdasd</label>
+                                <img src="../public/logo/typescript.png" alt="">
+                                <label>TypeScript</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis explicabo dignissimos dolor corporis nulla cupiditate repellat ratione minima unde dolorum optio repudiandae, dolorem, aut error enim, nostrum quo? Molestiae, quis. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur accusamus molestias doloribus distinctio vitae! Asperiores saepe iste accusantium doloremque placeat ut nulla ab, soluta, necessitatibus nisi accusamus rerum dignissimos! Asperiores. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste nisi suscipit perspiciatis rerum ullam nihil sequi quam aspernatur similique culpa explicabo tempora, eligendi enim ducimus asperiores. Officiis animi deserunt illum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod voluptate quaerat reprehenderit quam tempora maxime ipsa perspiciatis suscipit nemo, eligendi neque optio alias corrupti eos asperiores delectus ex! Mollitia, quam?Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam nam enim facere quod iusto harum corporis illo nesciunt, tempore autem praesentium optio, odio deserunt perspiciatis. Blanditiis neque reiciendis aliquid cumque!Lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum doloribus, delectus voluptate, sit id recusandae aliquid a possimus error ducimus assumenda consectetur perferendis architecto dolores facere cupiditate, quae mollitia labore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam facere, neque nesciunt numquam a vero, minima tempore molestias beatae asperiores laboriosam fugit qui rerum ex sint excepturi sit earum et! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere exercitationem animi fugit fuga, expedita repellendus veritatis odio asperiores nostrum quasi ratione molestias architecto voluptate incidunt earum commodi natus blanditiis ut!</p>
+            <p>{{this.description}}</p>
         </div>
     </div>
 </body>
