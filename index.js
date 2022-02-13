@@ -23,7 +23,7 @@ const projects = [
     endDate: "2022-03-01",
     year: "2022",
     duration: "3 Months",
-    description: `Some quick example text to build on the card title and make up the bulk of the card's contents.`,
+    description: `Some quick example text to build card.`,
   },
 ];
 
