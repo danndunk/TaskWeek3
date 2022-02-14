@@ -68,7 +68,7 @@ app.post("/home", function (req, res) {
   let startYearS = new Date(startDate);
 
   let description = req.body.description;
-  // let iconGroup = req.body.tech;
+  let iconGroup = req.body.tech;
 
   //   let file = req.body.file;
 
@@ -79,6 +79,7 @@ app.post("/home", function (req, res) {
     year: getYear(startYearS),
     duration: getDurationTime(duration),
     description,
+    iconGroup,
   };
 
   projects.push(project);
@@ -94,44 +95,44 @@ app.get("/update-project/:index", function (req, res) {
 });
 
 // update project
-app.post("/home", function (req, res) {
-  let index = req.params.index;
+// app.post("/home", function (req, res) {
+//   let index = req.params.index;
 
-  projects[index].title = req.body.projectname;
-  projects[index].startDate = req.body.startdate;
-  projects[index].endDate = req.body.enddate;
+//   projects[index].title = req.body.projectname;
+//   projects[index].startDate = req.body.startdate;
+//   projects[index].endDate = req.body.enddate;
 
-  projects[index].duration = new Date(endDate) - new Date(startDate);
-  projects[index].year = new Date(startDate);
+//   projects[index].duration = new Date(endDate) - new Date(startDate);
+//   projects[index].year = new Date(startDate);
 
-  projects[index].description = req.body.description;
+//   projects[index].description = req.body.description;
 
-  // let index = req.params.index;
+//   // let index = req.params.index;
 
-  // let title = req.body.projectname;
+//   // let title = req.body.projectname;
 
-  // let startDate = req.body.startdate;
-  // let endDate = req.body.enddate;
+//   // let startDate = req.body.startdate;
+//   // let endDate = req.body.enddate;
 
-  // let duration = new Date(endDate) - new Date(startDate);
-  // let startYearS = new Date(startDate);
+//   // let duration = new Date(endDate) - new Date(startDate);
+//   // let startYearS = new Date(startDate);
 
-  // let description = req.body.description;
+//   // let description = req.body.description;
 
-  // let project = {
-  //   title,
-  //   startDate,
-  //   endDate,
-  //   year: getYear(startYearS),
-  //   duration: getDurationTime(duration),
-  //   description,
-  // };
+//   // let project = {
+//   //   title,
+//   //   startDate,
+//   //   endDate,
+//   //   year: getYear(startYearS),
+//   //   duration: getDurationTime(duration),
+//   //   description,
+//   // };
 
-  // delete projects[index];
-  // projects[index] = project;
-  console.log("asidhasud");
-  res.redirect("/home");
-});
+//   // delete projects[index];
+//   // projects[index] = project;
+//   console.log("asidhasud");
+//   res.redirect("/home");
+// });
 
 // delete fitur
 app.get("/delete-project/:index", function (req, res) {
