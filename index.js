@@ -52,7 +52,7 @@ app.get("/", function (req, res) {
 
 // home
 app.get("/home", function (req, res) {
-  let query = "SELECT * FROM tb_projects";
+  let query = "SELECT * FROM tb_projects ORDER BY id DESC";
 
   db.connect((err, client, done) => {
     if (err) throw err;
@@ -63,7 +63,6 @@ app.get("/home", function (req, res) {
       if (err) throw err;
 
       let data = result.rows;
-      console.log(data);
 
       data = data.map((item) => {
         return {
@@ -75,93 +74,101 @@ app.get("/home", function (req, res) {
           isLogin: isLogin,
         };
       });
-      console.log(data);
       res.render("index", { isLogin: isLogin, projects: data });
     });
   });
 });
 
 app.post("/home", function (req, res) {
-  let title = req.body.projectname;
-
-  let startDate = req.body.startdate;
-  let endDate = req.body.enddate;
-
-  let duration = new Date(endDate) - new Date(startDate);
-  let startYearS = new Date(startDate);
-
-  let description = req.body.description;
-  // let iconGroup = req.body.tech;
-
-  //   let file = req.body.file;
+  let { projectName, startDate, endDate, description, image } = req.body;
 
   let project = {
-    title,
+    projectName,
     startDate,
     endDate,
-    year: getYear(startYearS),
-    duration: getDurationTime(duration),
     description,
+    image: "image.png",
   };
 
-  projects.push(project);
+  db.connect((err, client, done) => {
+    if (err) throw err;
 
-  res.redirect("/home");
+    let query = `INSERT INTO tb_projects(name, start_date, end_date, description, image) VALUES
+                        ('${project.projectName}', '${project.startDate}', '${project.endDate}', '${project.description}', '${project.image}')`;
+
+    client.query(query, (err, result) => {
+      done();
+      if (err) throw err;
+      res.redirect("/home");
+    });
+  });
 });
 
 // set update project
-app.get("/update-project/:index", function (req, res) {
-  let index = req.params.index;
-  index = projects[index];
-  res.render("update-project", index);
+app.get("/update-project/:id", function (req, res) {
+  let { id } = req.params;
+
+  db.connect((err, client, done) => {
+    if (err) throw err;
+
+    let query = `SELECT * FROM tb_projects WHERE id=${id}`;
+
+    client.query(query, (err, result) => {
+      done();
+
+      if (err) throw err;
+
+      let data = result.rows;
+
+      data = data.map((item) => {
+        return {
+          ...item,
+          startDate: convertDate(item.start_date),
+          endDate: convertDate(item.end_date),
+        };
+      });
+      data = data[0];
+      console.log(data);
+      res.render("update-project", { project: data });
+    });
+  });
 });
 
 // update project
-app.post("/home", function (req, res) {
-  let index = req.params.index;
+app.post("/update-project/:id", function (req, res) {
+  let { id } = req.params;
+  let { projectName, startDate, endDate, description } = req.body;
 
-  projects[index].title = req.body.projectname;
-  projects[index].startDate = req.body.startdate;
-  projects[index].endDate = req.body.enddate;
+  let query = `UPDATE tb_projects SET name='${projectName}', start_date='${startDate}', end_date='${endDate}', description='${description}' WHERE id=${id}`;
 
-  projects[index].duration = new Date(endDate) - new Date(startDate);
-  projects[index].year = new Date(startDate);
+  db.connect((err, client, done) => {
+    if (err) throw err;
 
-  projects[index].description = req.body.description;
+    client.query(query, (err, result) => {
+      done();
+      if (err) throw err;
 
-  // let index = req.params.index;
-
-  // let title = req.body.projectname;
-
-  // let startDate = req.body.startdate;
-  // let endDate = req.body.enddate;
-
-  // let duration = new Date(endDate) - new Date(startDate);
-  // let startYearS = new Date(startDate);
-
-  // let description = req.body.description;
-
-  // let project = {
-  //   title,
-  //   startDate,
-  //   endDate,
-  //   year: getYear(startYearS),
-  //   duration: getDurationTime(duration),
-  //   description,
-  // };
-
-  // delete projects[index];
-  // projects[index] = project;
-  console.log("asidhasud");
-  res.redirect("/home");
+      res.redirect("/home");
+    });
+  });
 });
 
 // delete fitur
-app.get("/delete-project/:index", function (req, res) {
-  let index = req.params.index;
+app.get("/delete-project/:id", function (req, res) {
+  let { id } = req.params;
 
-  projects.splice(index, 1);
-  res.redirect("/home");
+  db.connect((err, client, done) => {
+    if (err) throw err;
+
+    let query = `DELETE FROM tb_projects WHERE id=${id}`;
+
+    client.query(query, (err, result) => {
+      done();
+      if (err) throw err;
+
+      res.redirect("/home");
+    });
+  });
 });
 
 // add project
@@ -170,13 +177,31 @@ app.get("/my-project", function (req, res) {
 });
 
 // detail projek
-app.get("/home/:index", function (req, res) {
-  let index = req.params.index;
-  index = projects[index];
-  index.startDate = getFullTime(new Date(index.startDate));
-  index.endDate = getFullTime(new Date(index.endDate));
+app.get("/home/:id", function (req, res) {
+  let { id } = req.params;
 
-  res.render("my-project-detail", index);
+  db.connect((err, client, done) => {
+    if (err) throw err;
+
+    let query = `SELECT * FROM tb_projects WHERE id=${id}`;
+    client.query(query, (err, result) => {
+      done();
+      if (err) throw err;
+
+      let data = result.rows;
+      data = data.map((item) => {
+        return {
+          ...item,
+          startDate: getFullTime(item.start_date),
+          endDate: getFullTime(item.end_date),
+          duration: getDurationTime(item.end_date - item.start_date),
+          isLogin: isLogin,
+        };
+      });
+      data = data[0];
+      res.render("my-project-detail", { project: data });
+    });
+  });
 });
 
 // contact
@@ -226,4 +251,20 @@ function getFullTime(time) {
   }
 
   return `${date} ${month[monthIndex]} ${year}`;
+}
+
+function convertDate(time) {
+  let date = time.getDate();
+  let month = time.getMonth() + 1;
+  let year = time.getFullYear();
+
+  if (date < 10) {
+    date = "0" + date;
+  }
+
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  return `${year}-${month}-${date}`;
 }

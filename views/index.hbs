@@ -134,7 +134,7 @@
                   class="card-img-top"
                   alt="..."
                 />
-                <a href="/home/{{@index}}">
+                <a href="/home/{{this.id}}">
                   <h5 class="card-title">{{this.name}} - {{this.year}}</h5>
                 </a>   
                 <P id="duration">Duration: {{this.duration}}</P>
@@ -148,8 +148,8 @@
                 </div>
                 {{#if isLogin}}
                 <div class="editndelete d-flex justify-content-between">
-                  <a href="/update-project/{{@index}}">edit</a>
-                  <a href="/delete-project/{{@index}}">delete</a>
+                  <a href="/update-project/{{this.id}}">edit</a>
+                  <a href="/delete-project/{{this.id}}">delete</a>
                 </div>
                 {{/if}}
               </div>

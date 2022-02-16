@@ -58,7 +58,7 @@
 
     <div class="container-fluid d-flex justify-content-center pt-5" id="project-detail">
         <div class="container">
-            <h1>{{this.title}}</h1>
+            <h1>{{project.name}}</h1>
             <div class="d-flex container-detail-project">
                 <div class="me-4" style="width: 77%;">
                     <img src="../public//image/1597827883.jpg" alt="" style="width: 100%;">
@@ -67,11 +67,11 @@
                     <h3>Duration</h3>
                     <div class="d-flex align-items-end mb-4 mt-3">
                         <img src="../public/logo/calendar.png" alt="">
-                        <label>{{this.startDate}} - {{this.endDate}}</label>
+                        <label>{{project.startDate}} - {{project.endDate}}</label>
                     </div>
                     <div class="d-flex align-items-end mb-5">
                         <img src="../public/logo/calendar.png" alt="">
-                        <label>{{this.duration}}</label>
+                        <label>{{project.duration}}</label>
                     </div>
 
                     <h3>Technologies</h3>
@@ -85,8 +85,6 @@
                                 <img src="../public/logo/next.png" alt="">
                                 <label>ReactJS</label>
                             </div>
-                        </div>
-                        <div>
                             <div class="d-flex align-items-end mb-4 mt-3">
                                 <img src="../public/logo/next.png" alt="">
                                 <label>NextJS</label>
@@ -99,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <p>{{this.description}}</p>
+            <p>{{project.description}}</p>
         </div>
     </div>
 </body>

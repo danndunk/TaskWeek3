@@ -58,21 +58,21 @@
 
     <div class="container-fluid d-flex justify-content-center pt-5" id="form-project" style="background-color: #E3E7EB;">
         <div class="container-form">
-            <form action="/home" method="POST">
+            <form action="/update-project/{{project.id}}" method="POST">
                 <h1>Update My Project</h1>
                 <div class="mb-4 mt-5">
                     <label for="project-name" class="form-label">Project Name</label>
-                    <input type="text" class="form-control" id="project-name" aria-describedby="emailHelp" name="projectname" value="{{this.title}}">  
+                    <input type="text" class="form-control" id="project-name" aria-describedby="emailHelp" name="projectName" value="{{project.name}}">  
                     
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="mb-4" style="width: 49%;">
                         <label for="input-startdate" class="form-label">Start Date</label>
-                        <input type="date" class="form-control" id="input-startdate" aria-describedby="emailHelp" name="startdate" value="{{this.startDate}}">
+                        <input type="date" class="form-control" id="input-startdate" aria-describedby="emailHelp" name="startDate" value="{{project.startDate}}">
                     </div>
                     <div class="mb-4" style="width: 49%;">
                         <label for="input-enddate" class="form-label">End Date</label>
-                        <input type="date" class="form-control" id="input-enddate" aria-describedby="emailHelp" name="enddate" value="{{this.endDate}}">           
+                        <input type="date" class="form-control" id="input-enddate" aria-describedby="emailHelp" name="endDate" value="{{project.endDate}}">           
                     </div>
                 </div>
                 <div class="mb-4">
@@ -83,7 +83,7 @@
                         id="input-description"
                         cols="30"
                         rows="10"
-                    >{{this.description}}</textarea>
+                    >{{project.description}}</textarea>
                 </div>
                 
                 <div class="mb-4" id="technologies">
@@ -116,13 +116,9 @@
                 
                 <div class="mb-5 input-file">
                     <label>Upload Image</label>
-                    <div class="container-input-project-image">
-                        <label for="input-project-image" class="d-flex justify-content-between align-items-center">
-                          <span>choose</span>
-                          <img src="../public/logo/file.png" alt="file" />
-                        </label>
-                        <input type="file" id="input-project-image" name="file" hidden />
-                    </div>       
+                    <div class="input-group mt-2">
+                      <input type="file" class="form-control" id="inputGroupFile02" name="image">
+                    </div>      
                 </div>
                 
                 <div class="button-submit mb-4">
