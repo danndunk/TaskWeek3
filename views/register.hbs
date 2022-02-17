@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../public/stylesheet/style.css" />
     <title>Document</title>
   </head>
-  <body>
+  <body style="background-color: #E3E7EB;">
     <nav
       class="navbar navbar-expand-lg navbar-light fixed-top"
       style="background-color: #e3f2fd"
@@ -78,55 +78,44 @@
       </div>
     </nav>
 
-    <div
-      class="container-fluid d-flex justify-content-center pt-5"
-      id="project-detail"
-    >
-      <div class="container">
-        <h1>{{project.name}}</h1>
-        <div class="d-flex container-detail-project">
-          <div class="me-4" style="width: 77%;">
-            <img
-              src="../public//image/1597827883.jpg"
-              alt=""
-              style="width: 100%;"
+    <div class="container-fluid d-flex justify-content-center" id="form-regist">
+      <div class="container-form">
+        <form action="/register" method="POST">
+          <h1>REGISTER TO YOUR ACCOUNT</h1>
+          <div class="mb-4 mt-5">
+            <label for="email" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              aria-describedby="emailHelp"
+              name="name"
             />
           </div>
-          <div class="ms-4 mt-2 container-info-project" style="width: 23%;">
-            <h3>Duration</h3>
-            <div class="d-flex align-items-end mb-4 mt-3">
-              <img src="../public/logo/calendar.png" alt="" />
-              <label>{{project.startDate}} - {{project.endDate}}</label>
-            </div>
-            <div class="d-flex align-items-end mb-5">
-              <img src="../public/logo/calendar.png" alt="" />
-              <label>{{project.duration}}</label>
-            </div>
-
-            <h3>Technologies</h3>
-            <div class="d-flex">
-              <div class="me-5">
-                <div class="d-flex align-items-end mb-4 mt-3">
-                  <img src="../public/logo/react.png" alt="" />
-                  <label>NodeJS</label>
-                </div>
-                <div class="d-flex align-items-end">
-                  <img src="../public/logo/next.png" alt="" />
-                  <label>ReactJS</label>
-                </div>
-                <div class="d-flex align-items-end mb-4 mt-3">
-                  <img src="../public/logo/next.png" alt="" />
-                  <label>NextJS</label>
-                </div>
-                <div class="d-flex align-items-end">
-                  <img src="../public/logo/typescript.png" alt="" />
-                  <label>TypeScript</label>
-                </div>
-              </div>
-            </div>
+          <div class="mb-4 mt-5">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              name="email"
+            />
           </div>
-        </div>
-        <p>{{project.description}}</p>
+          <div class="mb-4 mt-5">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              aria-describedby="emailHelp"
+              name="password"
+            />
+          </div>
+          <div class="button-submit mb-4">
+            <button>Submit</button>
+          </div>
+        </form>
       </div>
     </div>
   </body>

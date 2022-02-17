@@ -225,7 +225,9 @@ nav #contactme a {
 }
 
 #form-project .button-submit button,
-#form-contact .button-submit {
+#form-contact .button-submit,
+#form-login .button-submit button,
+#form-regist .button-submit button {
   padding: 4px 23px;
   background: #111727;
   border-radius: 115px;
@@ -260,6 +262,12 @@ nav #contactme a {
   text-align: justify;
 }
 
-/* nav div ul li a:checked {
-  font-weight: bold;
-} */
+#form-regist,
+#form-login {
+  margin-top: 70px;
+}
+
+.alert {
+  margin-top: 53px;
+  position: relative;
+}

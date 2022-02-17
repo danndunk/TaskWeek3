@@ -1,11 +1,36 @@
 // import package express
 const express = require("express");
 
-// import package pg
-const db = require("./connection/db");
+// Import package bcrypt
+const bcrypt = require("bcrypt");
+
+// import package express-flash and express-session
+const flash = require("express-flash");
+const session = require("express-session");
 
 // menggunakan package express
 const app = express();
+
+// use express-flash
+app.use(flash());
+
+// setup session midleware
+app.use(
+  session({
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2,
+      secure: false,
+      httpOnly: true,
+    },
+    store: new session.MemoryStore(),
+    saveUninitialized: true,
+    resave: false,
+    secret: "secretValue",
+  })
+);
+
+// import package pg
+const db = require("./connection/db");
 
 // set template engine
 app.set("view engine", "hbs");
@@ -15,9 +40,6 @@ app.use("/public", express.static(__dirname + "/public"));
 
 // render data from form to home
 app.use(express.urlencoded({ extended: false }));
-
-// set login
-let isLogin = true;
 
 const projects = [
   {
@@ -44,6 +66,7 @@ let month = [
   "Nov",
   "Dec",
 ];
+let isLogin = true;
 
 // set endpoint / root
 app.get("/", function (req, res) {
@@ -71,10 +94,14 @@ app.get("/home", function (req, res) {
             new Date(item.end_date) - new Date(item.start_date)
           ),
           year: getYear(new Date(item.start_date)),
-          isLogin: isLogin,
+          isLogin: req.session.isLogin,
         };
       });
-      res.render("index", { isLogin: isLogin, projects: data });
+      res.render("index", {
+        isLogin: req.session.isLogin,
+        user: req.session.user,
+        projects: data,
+      });
     });
   });
 });
@@ -207,6 +234,74 @@ app.get("/home/:id", function (req, res) {
 // contact
 app.get("/contact", function (req, res) {
   res.render("contact");
+});
+
+app.get("/login", function (req, res) {
+  res.render("login");
+});
+
+app.post("/login", function (req, res) {
+  let { email, password } = req.body;
+
+  db.connect((err, client, done) => {
+    if (err) throw err;
+
+    let query = `SELECT * FROM tb_user WHERE email='${email}'`;
+    client.query(query, (err, result) => {
+      done();
+
+      if (result.rows.length == 0) {
+        req.flash("danger", "Account not found !");
+        return res.redirect("/login");
+      }
+
+      let isMatch = bcrypt.compareSync(password, result.rows[0].password);
+
+      if (isMatch) {
+        req.session.isLogin = true;
+        req.session.user = {
+          id: result.rows[0].id,
+          email: result.rows[0].email,
+          name: result.rows[0].name,
+        };
+        req.flash("success", "Login Success");
+        res.redirect("/home");
+      } else {
+        req.flash("failed", "Password doesnt match");
+        res.redirect("/login");
+      }
+    });
+  });
+});
+
+app.get("/register", function (req, res) {
+  res.render("register");
+});
+
+app.post("/register", function (req, res) {
+  let { name, email, password } = req.body;
+
+  let hashPassword = bcrypt.hashSync(password, 10);
+
+  db.connect((err, client, done) => {
+    if (err) throw err;
+
+    let query = `INSERT INTO tb_user(name, email, password) VALUES
+                        ('${name}','${email}','${hashPassword}')`;
+
+    client.query(query, (err, resul) => {
+      done();
+      if (err) throw err;
+
+      req.flash("success", "Account succesfully registered");
+      res.redirect("/login");
+    });
+  });
+});
+
+app.get("/logout", function (req, res) {
+  req.session.destroy();
+  res.redirect("/home");
 });
 
 // konfig app port
