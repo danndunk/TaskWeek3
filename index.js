@@ -81,14 +81,14 @@ app.get("/home", function (req, res) {
   let query;
 
   if (req.session.isLogin) {
-    query = `SELECT tb_projects.id, tb_projects.name, start_date, end_date, description, image, technologies, tb_user.name AS author
+    query = `SELECT tb_projects.id, tb_projects.name, start_date, end_date, description, technologies, image, tb_user.name AS author
                         FROM tb_projects 
                         INNER JOIN tb_user
                         ON tb_user.id = tb_projects.author_id
                         WHERE author_id = ${req.session.user.id}
                         ORDER BY id DESC`;
   } else {
-    query = `SELECT tb_projects.id, tb_projects.name, start_date, end_date, description, image, technologies, tb_user.name AS author
+    query = `SELECT tb_projects.id, tb_projects.name, start_date, end_date, description, technologies, image, tb_user.name AS author
                         FROM tb_projects 
                         INNER JOIN tb_user
                         ON tb_user.id = tb_projects.author_id
@@ -125,13 +125,14 @@ app.get("/home", function (req, res) {
 });
 
 app.post("/home", upload.single("image"), function (req, res) {
-  let { projectName, startDate, endDate, description } = req.body;
+  let { projectName, startDate, endDate, description, tech } = req.body;
 
   let project = {
     projectName,
     startDate,
     endDate,
     description,
+    tech,
     image: req.file.filename,
     author_id: req.session.user.id,
   };
@@ -139,8 +140,8 @@ app.post("/home", upload.single("image"), function (req, res) {
   db.connect((err, client, done) => {
     if (err) throw err;
 
-    let query = `INSERT INTO tb_projects(name, start_date, end_date, description, image, author_id) VALUES
-                        ('${project.projectName}', '${project.startDate}', '${project.endDate}', '${project.description}', '${project.image}', ${project.author_id})`;
+    let query = `INSERT INTO tb_projects(name, start_date, end_date, description, technologies, image, author_id) VALUES
+                        ('${project.projectName}', '${project.startDate}', '${project.endDate}', '${project.description}', '{${project.tech}}', '${project.image}', ${project.author_id})`;
 
     client.query(query, (err, result) => {
       done();
