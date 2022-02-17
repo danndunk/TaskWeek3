@@ -42,17 +42,19 @@
             <li class="nav-item ms-3">
               <a class="nav-link" aria-current="page" href="/home">Home</a>
             </li>
-            <li class="nav-item ms-4">
-              <a class="nav-link" href="/my-project">Add Project</a>
-            </li>
+            {{#if isLogin}}
+              <li class="nav-item ms-4">
+                <a class="nav-link" href="/my-project">Add Project</a>
+              </li>
+            {{/if}}
           </ul>
           <div>
             {{#if isLogin}}
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item me-4 mt-3">
+              <ul class="navbar-nav me-auto mt-3 mb-lg-0">
+                <li class="nav-item me-4">
                   <p class="nav-link">Hello, {{user.name}}</p>
                 </li>
-                <li class="nav-item me-4 mt-3">
+                <li class="nav-item me-4">
                   <a class="nav-link" href="/logout">Logout</a>
                 </li>
               </ul>
@@ -166,13 +168,17 @@
               <div class="card">
                 <div>
                   <img
-                    src="../public/image/0_84615834-110235457206910-1026033211311915008-n_9232ce61.jpg"
+                    src="/uploads/{{this.image}}"
                     class="card-img-top"
                     alt="..."
                   />
-                  <a href="/home/{{this.id}}">
-                    <h5 class="card-title">{{this.name}} - {{this.year}}</h5>
-                  </a>
+                  <div class="d-flex align-items-center">
+                    <a href="/home/{{this.id}}">
+                      <h5 class="card-title">{{this.name}} - {{this.year}}</h5>
+                    </a>
+                    <label class="ms-1" style="color: #666161;">|
+                      {{this.author}}</label>
+                  </div>
                   <P id="duration">Duration: {{this.duration}}</P>
                   <p class="card-text">
                     {{this.description}}

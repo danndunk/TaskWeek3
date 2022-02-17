@@ -4,6 +4,12 @@ const express = require("express");
 // Import package bcrypt
 const bcrypt = require("bcrypt");
 
+// import package pg
+const db = require("./connection/db");
+
+// import middleware upload
+const upload = require("./middlewares/uploadFile");
+
 // import package express-flash and express-session
 const flash = require("express-flash");
 const session = require("express-session");
@@ -29,14 +35,12 @@ app.use(
   })
 );
 
-// import package pg
-const db = require("./connection/db");
-
 // set template engine
 app.set("view engine", "hbs");
 
 // set app can use spesific folder (public)
 app.use("/public", express.static(__dirname + "/public"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // render data from form to home
 app.use(express.urlencoded({ extended: false }));
@@ -66,7 +70,6 @@ let month = [
   "Nov",
   "Dec",
 ];
-let isLogin = true;
 
 // set endpoint / root
 app.get("/", function (req, res) {
@@ -75,7 +78,22 @@ app.get("/", function (req, res) {
 
 // home
 app.get("/home", function (req, res) {
-  let query = "SELECT * FROM tb_projects ORDER BY id DESC";
+  let query;
+
+  if (req.session.isLogin) {
+    query = `SELECT tb_projects.id, tb_projects.name, start_date, end_date, description, image, technologies, tb_user.name AS author
+                        FROM tb_projects 
+                        INNER JOIN tb_user
+                        ON tb_user.id = tb_projects.author_id
+                        WHERE author_id = ${req.session.user.id}
+                        ORDER BY id DESC`;
+  } else {
+    query = `SELECT tb_projects.id, tb_projects.name, start_date, end_date, description, image, technologies, tb_user.name AS author
+                        FROM tb_projects 
+                        INNER JOIN tb_user
+                        ON tb_user.id = tb_projects.author_id
+                        ORDER BY id DESC`;
+  }
 
   db.connect((err, client, done) => {
     if (err) throw err;
@@ -106,22 +124,23 @@ app.get("/home", function (req, res) {
   });
 });
 
-app.post("/home", function (req, res) {
-  let { projectName, startDate, endDate, description, image } = req.body;
+app.post("/home", upload.single("image"), function (req, res) {
+  let { projectName, startDate, endDate, description } = req.body;
 
   let project = {
     projectName,
     startDate,
     endDate,
     description,
-    image: "image.png",
+    image: req.file.filename,
+    author_id: req.session.user.id,
   };
 
   db.connect((err, client, done) => {
     if (err) throw err;
 
-    let query = `INSERT INTO tb_projects(name, start_date, end_date, description, image) VALUES
-                        ('${project.projectName}', '${project.startDate}', '${project.endDate}', '${project.description}', '${project.image}')`;
+    let query = `INSERT INTO tb_projects(name, start_date, end_date, description, image, author_id) VALUES
+                        ('${project.projectName}', '${project.startDate}', '${project.endDate}', '${project.description}', '${project.image}', ${project.author_id})`;
 
     client.query(query, (err, result) => {
       done();
@@ -155,18 +174,29 @@ app.get("/update-project/:id", function (req, res) {
         };
       });
       data = data[0];
-      console.log(data);
-      res.render("update-project", { project: data });
+      res.render("update-project", {
+        isLogin: req.session.isLogin,
+        user: req.session.user,
+        project: data,
+      });
     });
   });
 });
 
 // update project
-app.post("/update-project/:id", function (req, res) {
+app.post("/update-project/:id", upload.single("image"), function (req, res) {
   let { id } = req.params;
   let { projectName, startDate, endDate, description } = req.body;
 
-  let query = `UPDATE tb_projects SET name='${projectName}', start_date='${startDate}', end_date='${endDate}', description='${description}' WHERE id=${id}`;
+  let project = {
+    projectName,
+    startDate,
+    endDate,
+    description,
+    image: req.file.filename,
+  };
+
+  let query = `UPDATE tb_projects SET name='${project.projectName}', start_date='${project.startDate}', end_date='${project.endDate}', description='${project.description}', image='${project.image}' WHERE id=${id}`;
 
   db.connect((err, client, done) => {
     if (err) throw err;
@@ -200,7 +230,10 @@ app.get("/delete-project/:id", function (req, res) {
 
 // add project
 app.get("/my-project", function (req, res) {
-  res.render("my-project");
+  res.render("my-project", {
+    isLogin: req.session.isLogin,
+    user: req.session.user,
+  });
 });
 
 // detail projek
@@ -222,22 +255,31 @@ app.get("/home/:id", function (req, res) {
           startDate: getFullTime(item.start_date),
           endDate: getFullTime(item.end_date),
           duration: getDurationTime(item.end_date - item.start_date),
-          isLogin: isLogin,
+          isLogin: req.session.isLogin,
         };
       });
       data = data[0];
-      res.render("my-project-detail", { project: data });
+      res.render("my-project-detail", {
+        isLogin: req.session.isLogin,
+        user: req.session.user,
+        project: data,
+      });
     });
   });
 });
-
 // contact
 app.get("/contact", function (req, res) {
-  res.render("contact");
+  res.render("contact", {
+    isLogin: req.session.isLogin,
+    user: req.session.user,
+  });
 });
 
 app.get("/login", function (req, res) {
-  res.render("login");
+  res.render("login", {
+    isLogin: req.session.isLogin,
+    user: req.session.user,
+  });
 });
 
 app.post("/login", function (req, res) {
@@ -275,7 +317,10 @@ app.post("/login", function (req, res) {
 });
 
 app.get("/register", function (req, res) {
-  res.render("register");
+  res.render("register", {
+    isLogin: req.session.isLogin,
+    user: req.session.user,
+  });
 });
 
 app.post("/register", function (req, res) {

@@ -42,13 +42,15 @@
             <li class="nav-item ms-3">
               <a class="nav-link" aria-current="page" href="/home">Home</a>
             </li>
-            <li class="nav-item ms-4">
-              <a class="nav-link" href="/my-project">Add Project</a>
-            </li>
+            {{#if isLogin}}
+              <li class="nav-item ms-4">
+                <a class="nav-link" href="/my-project">Add Project</a>
+              </li>
+            {{/if}}
           </ul>
           <div>
             {{#if isLogin}}
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <ul class="navbar-nav me-auto mt-3 mb-lg-0">
                 <li class="nav-item me-4">
                   <p class="nav-link">Hello, {{user.name}}</p>
                 </li>
@@ -84,7 +86,7 @@
       style="background-color: #E3E7EB;"
     >
       <div class="container-form">
-        <form action="/home" method="POST">
+        <form action="/home" method="POST" enctype="multipart/form-data">
           <h1>ADD MY PROJECT</h1>
           <div class="mb-4 mt-5">
             <label for="project-name" class="form-label">Project Name</label>

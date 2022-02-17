@@ -271,3 +271,7 @@ nav #contactme a {
   margin-top: 53px;
   position: relative;
 }
+
+#navbarSupportedContent a:target {
+  font-weight: 800;
+}
